@@ -1,0 +1,447 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!-- ================================
+Start SEO blocks
+================================= -->
+{% block title %}{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+<!-- ================================
+END SEO blocks
+================================= -->
+
+<!-- ================================
+Start CSS blocks
+================================= -->
+{% block extend_header %}{% endblock %}
+<!-- ================================
+END CSS blocks
+================================= -->
+
+<!-- ================================
+Start script blocks
+================================= -->
+{% block extend_footer %}{% endblock %}
+<!-- ================================
+END script blocks
+================================= -->
+
+<!-- ================================
+Start Content
+================================= -->
+{% block content %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="hero d-flex align-items-center section-bg">
+    <div class="container">
+        <div class="row justify-content-between gy-5">
+            <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+                <h2 data-aos="fade-up">{{me.userprofile.heroText1}}<br>{{me.userprofile.heroText2}}</h2>
+                <p data-aos="fade-up" data-aos-delay="100">{{me.userprofile.heroText3}}</p>
+                <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                <a href="#book-a-chef" class="btn-book-a-chef">Book a Chef</a>
+                {% if me.userprofile.heroVideoURL != None %}<a href="{{me.userprofile.heroVideoURL}}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>{% endif %}
+                </div>
+            </div>
+        <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+            <img src="{{me.userprofile.heroImage.url}}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+        </div>
+        </div>
+    </div>
+</section><!-- End Hero Section -->
+
+<main id="main">
+
+<!-- ======= About Section ======= -->
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+    {% for abu in about_us %}
+    <div class="section-header">
+        <h2>About Us</h2>
+        <p>Learn More <span>About Us</span></p>
+    </div>
+
+    <div class="row gy-4">
+        <div class="col-lg-7 position-relative about-img" style="background-image: url({{abu.image_big.url}});" data-aos="fade-up" data-aos-delay="150">
+        <div class="call-us position-absolute">
+            <h4>Book a Chef</h4>
+            <p>{{abu.contact_number}}</p>
+        </div>
+        </div>
+        <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
+        <div class="content ps-0 ps-lg-5">
+            <p class="fst-italic">
+                {{abu.text_top}}
+            </p>
+            <p class="fst-italic">Services offered: </p>
+            <ul>
+                {% for s in services %}
+                    {% if s.is_active %}    
+                        <li><i class="bi bi-check2-all"></i>{{s.service}}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p>
+                {{abu.text_bottom}}
+            </p>
+
+            <div class="position-relative mt-4">
+            <img src="{{abu.image_small.url}}" class="img-fluid" alt="">
+            {% if abu.VideoURL != None %}<a href="{{abu.VideoURL}}" class="glightbox play-btn"></a>{% endif %}
+            </div>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    </div>
+</section><!-- End About Section -->
+
+<!-- ======= Testimonials Section ======= -->
+<section id="testimonials" class="testimonials section-bg">
+    <div class="container" data-aos="fade-up">
+
+    <div class="section-header">
+        <h2>Testimonials</h2>
+        <p>What Are They <span>Saying About Us</span></p>
+    </div>
+
+    <div class="slides-1 swiper" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper-wrapper">
+            {% for t in testimonials %}
+            {% if t.is_active %}
+            <div class="swiper-slide">
+                <div class="testimonial-item">
+                <div class="row gy-4 justify-content-center">
+                    <div class="col-lg-6">
+                    <div class="testimonial-content">
+                        <p>
+                            <i class="bi bi-quote quote-icon-left"></i>
+                                {{t.quote}}
+                            <i class="bi bi-quote quote-icon-right"></i>
+                        </p>
+                        <h3>{{t.name}}</h3>
+                        <h4>{{t.role}}</h4>
+                        <div class="stars">
+                            {% if t.stars == 1 %} <i class="bi bi-star-fill"></i>
+                            {% elif t.stars == 2 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            {% elif t.stars == 3 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
+                            {% elif t.stars == 4 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i>
+                            {% else %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                            {% endif %}
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                    <img src="{{t.thumbnail.url}}" class="img-fluid testimonial-img" alt="">
+                    </div>
+                </div>
+                </div>
+            </div><!-- End testimonial item -->
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    </div>
+</section><!-- End Testimonials Section -->
+
+<!-- ======= Events Section ======= -->
+<section id="events" class="events">
+    <div class="container-fluid" data-aos="fade-up">
+
+    <div class="section-header">
+        <h2>Events</h2>
+        <p>Share <span>Your Moments</span> With Our Chefs</p>
+    </div>
+
+    <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper-wrapper">
+            {% for e in events %}
+            {% if e.is_active %}
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({{e.image.url}})">
+                <h3>{{ e.name }}</h3>
+                <div class="price align-self-start">R{{ e.price }}</div>
+                <p class="description"> {{ e.description }} </p>
+            </div><!-- End Event item -->
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    </div>
+</section><!-- End Events Section -->
+
+<!-- ======= Chefs Section ======= -->
+<section id="chefs" class="chefs section-bg">
+    <div class="container" data-aos="fade-up">
+
+    <div class="section-header">
+        <h2>Chefs</h2>
+        <p>Meet Our <span>Profesional</span> Chefs</p>
+    </div>
+
+    <div class="row gy-4">
+        {% for c in chefs %}
+        {% if c.is_active %}
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+            <div class="chef-member">
+                <div class="member-img">
+                <img src="{{ c.image.url }}" class="img-fluid" alt="">
+                <div class="social">
+                    {% if c.twitterURL != None %}<a href="{{ c.twitterURL }}"><i class="bi bi-twitter"></i></a>{% endif %}
+                    {% if c.facebookURL != None %}<a href="{{ c.facebookURL }}"><i class="bi bi-facebook"></i></a>{% endif %}
+                    {% if c.instagramURL != None %}<a href="{{ c.instagramURL }}"><i class="bi bi-instagram"></i></a>{% endif %}
+                    {% if c.linkedinURL != None %}<a href="{{ c.linkedinURL }}"><i class="bi bi-linkedin"></i></a>{% endif %}
+                </div>
+                </div>
+                <div class="member-info">
+                <h4>{{ c.name }}</h4>
+                <span>{{ c.role }}</span>
+                <p>{{ c.bio }}</p>
+                </div>
+            </div>
+        </div><!-- End Chefs Member -->
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    </div>
+</section><!-- End Chefs Section -->
+
+<!-- ======= Book A Chef Section ======= -->
+<section id="book-a-chef" class="book-a-chef">
+    <div class="container" data-aos="fade-up">
+
+    <div class="section-header">
+        <h2>Book A Chef</h2>
+        <p>Book <span>Your Chef</span> With Us</p>
+    </div>
+
+    <div class="row g-0">
+
+        <div class="col-lg-4 reservation-img" style="background-image: url(assets/img/reservation.jpg);" data-aos="zoom-out" data-aos-delay="200"></div>
+
+        <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
+        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+        {% csrf_token %}    
+            <div class="row gy-4">
+            <div class="col-lg-4 col-md-6">
+                <!--<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
+                {{ form.name }}
+                <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
+                <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <input type="text" name="date" class="form-control" id="date" placeholder="Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <input type="text" class="form-control" name="time" id="time" placeholder="Time" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
+                <div class="validate"></div>
+            </div>
+            </div>
+            <div class="form-group mt-3">
+            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
+            <div class="validate"></div>
+            </div>
+            <div class="mb-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your booking. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Book a Chef</button></div>
+        </form>
+        </div><!-- End Booking Form -->
+
+    </div>
+
+    </div>
+</section><!-- End Book A Chef Section -->
+
+<!-- ======= Gallery Section ======= -->
+<section id="gallery" class="gallery section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2>gallery</h2>
+            <p>Check <span>Our Gallery</span></p>
+        </div>
+
+        <div class="gallery-slider swiper">
+                    <div class="swiper-wrapper align-items-center">
+                        {% for g in gallery %}
+                            {% if g.is_active %}
+                                <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="{{g.image.url}}"><img src="{{g.image.url}}" class="img-fluid" alt=""></a></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section><!-- End Gallery Section -->
+
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+
+    <div class="section-header">
+        <h2>Contact</h2>
+        <p>Need Help? <span>Contact Us</span></p>
+    </div>
+
+    <div class="row gy-4">
+        {% for abu in about_us %}
+        <div class="col-md-6">
+        <div class="info-item  d-flex align-items-center">
+            <i class="icon bi bi-map flex-shrink-0"></i>
+            <div>
+            <h3>Our Address</h3>
+            <p>{{abu.address}}</p>
+            </div>
+        </div>
+        </div><!-- End Info Item -->
+        
+        <div class="col-md-6">
+        <div class="info-item d-flex align-items-center">
+            <i class="icon bi bi-envelope flex-shrink-0"></i>
+            <div>
+            <h3>Email Us</h3>
+            <p>{{abu.contact_email}}</p>
+            </div>
+        </div>
+        </div><!-- End Info Item -->
+
+        <div class="col-md-6">
+        <div class="info-item  d-flex align-items-center">
+            <i class="icon bi bi-telephone flex-shrink-0"></i>
+            <div>
+            <h3>Call Us</h3>
+            <p>{{abu.contact_number}}</p>
+            </div>
+        </div>
+        </div><!-- End Info Item -->
+        
+        <div class="col-md-6">
+        <div class="info-item  d-flex align-items-center">
+            <i class="icon bi bi-share flex-shrink-0"></i>
+            <div>
+            <h3>Opening Hours</h3>
+            <div><strong>Mon-Sat:</strong> 11AM - 23PM;
+                <strong>Sunday:</strong> Closed
+            </div>
+            </div>
+        </div>
+        </div><!-- End Info Item -->
+        {% endfor %}
+
+    </div>
+
+    <form id="contactForm" action="" method="POST" role="form">
+    {% csrf_token %}
+        <div class="row" style="margin: 1rem auto">
+            <div class="col-xl-6 form-group">
+                {{ form.name }}
+            </div>
+            <div class="col-xl-6 form-group">
+                {{ form.email }}
+            </div>
+        </div>
+        <div class="form-group" style="margin: 1rem auto">
+            {{ form.subject }}
+        </div>
+        <div class="form-group" style="margin: 1rem auto">
+            {{ form.message }}
+        </div>
+        <div class="text-center" style="margin: 1rem auto"><button type="submit">Send Message</button></div>
+    </form><!--End Contact Form -->
+
+    </div>
+</section><!-- End Contact Section -->
+
+<!-- ================================
+Start Footer
+================================= -->
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+    <div class="container">
+        <div class="row gy-3">
+        {% for abu in about_us %}
+            <div class="col-lg-3 col-md-6 d-flex">
+                <i class="bi bi-geo-alt icon"></i>
+                <div>
+                    <h4>Address</h4>
+                    <p>{{abu.address}}</p>
+                </div>
+        
+            </div>
+        
+            <div class="col-lg-3 col-md-6 footer-links d-flex">
+                <i class="bi bi-telephone icon"></i>
+                <div>
+                <h4>Bookings</h4>
+                <p>
+                        <strong>Phone:</strong> {{abu.contact_number}}<br>
+                        <strong>Email:</strong> {{contact_email}}<br>
+                </p>
+                </div>
+            </div>
+        
+            <div class="col-lg-3 col-md-6 footer-links d-flex">
+                <i class="bi bi-clock icon"></i>
+                <div>
+                <h4>Opening Hours</h4>
+                <p>
+                    <strong>Mon-Sat: 11AM</strong> - 23PM<br>
+                    Sunday: Closed
+                </p>
+                </div>
+            </div>
+        
+            <div class="col-lg-3 col-md-6 footer-links">
+                <h4>Follow Us</h4>
+                <div class="social-links d-flex">
+                    {% for abu in about_us %}
+                    {% if abu.mytwitterURL != None %}<a href="{{abu.mytwitterURL}}" class="twitter"><i class="bi bi-twitter"></i></a>{% endif %}
+                    {% if abu.myfacebookURL != None %}<a href="{{abu.myfacebookURL}}" class="facebook"><i class="bi bi-facebook"></i></a>{% endif %}
+                    {% if abu.myinstagramURL != None %}<a href="{{abu.myinstagramURL}}" class="instagram"><i class="bi bi-instagram"></i></a>{% endif %}
+                    {% if abu.mylinkedinURL != None %}<a href="{{abu.mylinkedinURL}}" class="linkedin"><i class="bi bi-linkedin"></i></a>{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>The Pvt Cook</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                Designed by <a href="https://bootstrapmade.com/">BootstrapMade &</a>
+            </div>
+        </div>
+    
+</footer><!-- End Footer -->
+<!-- End Footer -->
+<!-- ================================
+End Footer
+================================= -->
+</main><!-- End #main -->
+
+<!-- ================================
+End Content
+================================= -->
+{% endblock %}
