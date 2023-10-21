@@ -27,11 +27,7 @@
     <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{% static 'css/main.css' %}" rel="stylesheet">
-    <!-- AlertifyJS CDN CSS -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-    <!-- AlertifyJS CDN Default theme -->
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>    
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">   
     {% block extend_header%}{%endblock%}
   </head>
 
@@ -78,26 +74,11 @@
     <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
     <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
     <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/php-email-form/validate.js' %}"></script>
-
+    <!-- Ajax -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Template Main JS File -->
     <script src="{% static 'js/main.js' %}"></script>
-    <!-- AlertifyJS CDN JavaScript -->
-    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-
-    {% if messages %}
-    {% for message in messages %}
-        {% if message.tags == 'alert-success' %}  
-            <script>  
-              alertify.set('notifier','position', 'top-center');
-              alertify.success('{{message}}'); 
-            </script>
-        {% elif message.tags == 'alert-danger' %}  
-            <script> alertify.alert('Error!', '{{message}}'); </script> 
-        {% endif %}
-        
-    {% endfor %}
-    {% endif %}    
+    <script src="{% static 'js/main2.js' %}"></script>   
     <!-- ================================
     End Scripts
     ================================= -->

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib import messages
+from django.http import HttpResponse, JsonResponse
 from .models import (
 		UserProfile,
 		Service,
@@ -14,48 +15,38 @@ from .models import (
 from django.views import generic
 from . forms import ContactForm, BookingForm
 
-class IndexView(generic.FormView):
-#class IndexView(generic.TemplateView, generic.FormView):
-	template_name = "main/index.html"
+def index(request):
+	form = None
+     
+	if request.is_ajax():
+		if (request.POST['tag'] == 'bookingForm'):
+			form = BookingForm(request.POST)
+		elif (request.POST['tag'] == 'contactForm'):
+			form = ContactForm(request.POST)
 
-	form_class = ContactForm
-
-	success_url = "."
-
-	def form_valid(self, form):
-		form.save()
-		messages.success(self.request, 'Thank you. We will be in touch soon.')
-		return super().form_valid(form)
-
-	def form_invalid(self, form):
-		messages.error(self.request, 'Oh dear, please check the form and send again.')
-		return super().form_invalid(form)
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
+		if form.is_valid():
+			form.save()		
+			return JsonResponse({
+                'msg': 'valid'
+            })
+		else:
+			print(form.errors.as_data())
+			return JsonResponse({'msg': 'invalid'})
 		
-		services = Service.objects.filter(is_active=True)
-		about_us = AboutUs.objects.all()
-		testimonials = Testimonial.objects.filter(is_active=True)
-		gallery = Gallery.objects.filter(is_active=True)
-		events = Event.objects.filter(is_active=True)
-		chefs = Chef.objects.filter(is_active=True)
+	services = Service.objects.filter(is_active=True)
+	about_us = AboutUs.objects.all()
+	testimonials = Testimonial.objects.filter(is_active=True)
+	gallery = Gallery.objects.filter(is_active=True)
+	events = Event.objects.filter(is_active=True)
+	chefs = Chef.objects.filter(is_active=True)
 		
-		context["services"] = services
-		context["about_us"] = about_us
-		context["testimonials"] = testimonials
-		context["events"] = events
-		context["chefs"] = chefs
-		context["gallery"] = gallery
-		return context
+	context = {
+		'services': services,
+		'about_us': about_us,
+		'testimonials': testimonials,
+		'gallery': gallery,
+		'events': events,
+		'chefs': chefs,
+	}
 
-
-class ContactView(generic.FormView):
-	template_name = "main/contact.html"
-	form_class = ContactForm
-	success_url = "/"
-	
-	def form_valid(self, form):
-		form.save()
-		messages.success(self.request, 'Thank you. We will be in touch soon.')
-		return super().form_valid(form)
+	return render(request, 'main/index.html', context)

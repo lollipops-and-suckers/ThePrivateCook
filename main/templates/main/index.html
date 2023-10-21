@@ -4,7 +4,7 @@
 <!-- ================================
 Start SEO blocks
 ================================= -->
-{% block title %}{% endblock %}
+{% block title %}The PVT Cook{% endblock %}
 {% block decription %}{% endblock %}
 {% block keywords %}{% endblock %}
 <!-- ================================
@@ -221,49 +221,36 @@ Start Content
     </div>
 
     <div class="row g-0">
-
-        <div class="col-lg-4 reservation-img" style="background-image: url(assets/img/reservation.jpg);" data-aos="zoom-out" data-aos-delay="200"></div>
-
-        <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
-        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+        {% for abu in about_us %}
+            <div class="col-lg-4 booking-img" style="background-image: url({{abu.image_booking.url}});" data-aos="zoom-out" data-aos-delay="200"></div>
+        {% endfor %}
+        <div class="col-lg-8 d-flex align-items-center booking-form-bg">
+        <form id="bookingForm" class="booking-form" data-aos="fade-up" data-aos-delay="100">
         {% csrf_token %}    
             <div class="row gy-4">
             <div class="col-lg-4 col-md-6">
-                <!--<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">-->
-                {{ form.name }}
-                <div class="validate"></div>
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required data-rule="minlen:4" data-msg="Please enter at least 4 chars">
             </div>
             <div class="col-lg-4 col-md-6">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-                <div class="validate"></div>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required data-rule="email" data-msg="Please enter a valid email">
             </div>
             <div class="col-lg-4 col-md-6">
-                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                <div class="validate"></div>
+                <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required data-rule="minlen:4" data-msg="Please enter at least 4 chars">
             </div>
             <div class="col-lg-4 col-md-6">
-                <input type="text" name="date" class="form-control" id="date" placeholder="Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                <div class="validate"></div>
+                <input type="date" name="date" class="form-control" id="date" placeholder="Date" required data-rule="minlen:4" data-msg="Please enter at least 4 chars">
             </div>
             <div class="col-lg-4 col-md-6">
-                <input type="text" class="form-control" name="time" id="time" placeholder="Time" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-                <div class="validate"></div>
+                <input type="time" class="form-control" name="time" id="time" placeholder="Time" required value="13:30">
             </div>
             <div class="col-lg-4 col-md-6">
-                <input type="number" class="form-control" name="people" id="people" placeholder="# of people" data-rule="minlen:1" data-msg="Please enter at least 1 chars">
-                <div class="validate"></div>
+                <input type="number" class="form-control" name="people" id="people" placeholder="# of people" required data-rule="minlen:1" data-msg="Please enter at least 1 chars">
             </div>
             </div>
             <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-            <div class="validate"></div>
+            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Please specify when booking a preferred cuisine.. "></textarea>
             </div>
-            <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your booking. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Book a Chef</button></div>
+            <div class="text-center" style="margin: 1rem auto"><button type="submit" class="button-bookingForm valid-form">Book a Chef</button></div>
         </form>
         </div><!-- End Booking Form -->
 
@@ -349,25 +336,25 @@ Start Content
 
     </div>
 
-    <form id="contactForm" action="" method="POST" role="form">
+    <form id="contactForm" class="contact-form">
     {% csrf_token %}
         <div class="row" style="margin: 1rem auto">
             <div class="col-xl-6 form-group">
-                {{ form.name }}
+                <input type="text" name="name" class="form-control" id="name" placeholder="Your name" required>
             </div>
             <div class="col-xl-6 form-group">
-                {{ form.email }}
+                <input type="email" class="form-control" name="email" id="email" placeholder="Your email" required>
             </div>
         </div>
         <div class="form-group" style="margin: 1rem auto">
-            {{ form.subject }}
+            <input type="text" name="subject" class="form-control" id="subject" placeholder="Subject" required>
         </div>
         <div class="form-group" style="margin: 1rem auto">
-            {{ form.message }}
+            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message" required></textarea>
         </div>
-        <div class="text-center" style="margin: 1rem auto"><button type="submit">Send Message</button></div>
+        <div class="text-center" style="margin: 1rem auto"><button type="submit" class="button-Contact">Send Message</button></div>
     </form><!--End Contact Form -->
-
+    
     </div>
 </section><!-- End Contact Section -->
 
@@ -394,7 +381,7 @@ Start Footer
                 <h4>Bookings</h4>
                 <p>
                         <strong>Phone:</strong> {{abu.contact_number}}<br>
-                        <strong>Email:</strong> {{contact_email}}<br>
+                        <strong>Email:</strong> {{abu.contact_email}}<br>
                 </p>
                 </div>
             </div>
@@ -427,10 +414,11 @@ Start Footer
     
         <div class="container">
             <div class="copyright">
-                &copy; Copyright <strong><span>The Pvt Cook</span></strong>. All Rights Reserved
+                &copy; {% now 'Y' %} <strong><span>The Pvt Cook</span></strong>. All Rights Reserved.
             </div>
             <div class="credits">
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade &</a>
+                This website features a content management system, all content is maintained by the owner. <br>
+                Designed by <a href="https://Lollipops.pythonanywhere.com/">Lollipop</a>
             </div>
         </div>
     

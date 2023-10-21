@@ -11,17 +11,32 @@ from . models import (
     AboutUs
     )
 
+MAX_OBJECTS = 1
+
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
 	list_display = ('id', 'user')
 
 @admin.register(ContactProfile)
 class ContactAdmin(admin.ModelAdmin):
-	list_display = ('id', 'timestamp', 'name',)
+    list_display = ('id', 'timestamp', 'name',)
+     
+    # Stop backend users from creating objects for this model.
+    def has_add_permission(self, request):
+        if self.model.objects.count() >= 0:
+            return False
+        return super().has_add_permission(request)         
+
 
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-	list_display = ('id', 'timestamp', 'name',)
+    list_display = ('id', 'timestamp', 'name',)
+     
+    # Stop backend users from creating objects for this model.
+    def has_add_permission(self, request):
+        if self.model.objects.count() >= 0:
+            return False
+        return super().has_add_permission(request)         
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
@@ -46,3 +61,9 @@ class ServiceAdmin(admin.ModelAdmin):
 @admin.register(AboutUs)
 class AboutUsAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+
+    # Allow the user to only add one object for this model.
+    def has_add_permission(self, request):
+        if self.model.objects.count() >= MAX_OBJECTS:
+            return False
+        return super().has_add_permission(request)    

@@ -7,21 +7,25 @@ class ContactForm(forms.ModelForm):
 	name = forms.CharField(max_length=100, required=True,
 		widget=forms.TextInput(attrs={
 			'placeholder': 'Your name',
+			'id': 'name',
 			'class': 'form-control',
 			}))
 	email = forms.EmailField(max_length=254, required=True, 
 		widget=forms.TextInput(attrs={
 			'placeholder': 'Your email',
+			'id': 'email',
 			'class': 'form-control',
 			}))
 	subject = forms.CharField(max_length=100, required=True,
 		widget=forms.TextInput(attrs={
 			'placeholder': 'Subject',
+			'id': 'subject',
 			'class': 'form-control',
 			}))	
-	message = forms.CharField(max_length=1000, required=True, 
+	message = forms.CharField(max_length=1000, required=False, 
 		widget=forms.Textarea(attrs={
 			'placeholder': 'Your message',
+			'id': 'message',
 			'class': 'form-control',
 			'rows': 5,
 			}))
@@ -49,17 +53,17 @@ class BookingForm(forms.ModelForm):
 			'placeholder': 'Phone',
 			'class': 'form-control',
 			}))
-	date_booked_for = forms.DateField(
+	date = forms.DateField(
 		widget=forms.DateInput(attrs={
 			'placeholder': 'Date',
 			'class': 'form-control',
 			}))
-	time_booked_for = forms.TimeField(
+	time = forms.TimeField(
 			widget=forms.TimeInput(attrs={
 			'placeholder': 'Time',
 			'class': 'form-control',
 			}))
-	num_people = forms.IntegerField(required=True, min_value=1,
+	people = forms.IntegerField(required=True, min_value=1,
 		widget=forms.NumberInput(attrs={
 			'placeholder': '# of people',
 			'class': 'form-control',
@@ -74,4 +78,4 @@ class BookingForm(forms.ModelForm):
 
 	class Meta:
 		model = Booking
-		fields = ('name', 'email', 'message',)
+		fields = ('name', 'email', 'phone', 'date', 'time', 'people', 'message',)
