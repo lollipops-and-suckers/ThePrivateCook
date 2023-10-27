@@ -34,19 +34,21 @@ Start Content
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="hero d-flex align-items-center section-bg">
     <div class="container">
+        {% for h in home %}
         <div class="row justify-content-between gy-5">
             <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
-                <h2 data-aos="fade-up">{{me.userprofile.heroText1}}<br>{{me.userprofile.heroText2}}</h2>
-                <p data-aos="fade-up" data-aos-delay="100">{{me.userprofile.heroText3}}</p>
+                <h2 data-aos="fade-up">{{h.heroText1}}<br>{{h.heroText2}}</h2>
+                <p data-aos="fade-up" data-aos-delay="100">{{h.heroText3}}</p>
                 <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
                 <a href="#book-a-chef" class="btn-book-a-chef">Book a Chef</a>
-                {% if me.userprofile.heroVideoURL != None %}<a href="{{me.userprofile.heroVideoURL}}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>{% endif %}
+                {% if h.heroVideoURL != None %}<a href="{{h.heroVideoURL}}" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>{% endif %}
                 </div>
             </div>
         <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
-            <img src="{{me.userprofile.heroImage.url}}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+            <img src="{{h.heroImage.url}}" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
         </div>
         </div>
+        {% endfor %}
     </div>
 </section><!-- End Hero Section -->
 
@@ -77,7 +79,7 @@ Start Content
             <ul>
                 {% for s in services %}
                     {% if s.is_active %}    
-                        <li><i class="bi bi-check2-all"></i>{{s.service}}</li>
+                        <li><i class="bi bi-check2-all"></i>{{s.name}}</li>
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -147,24 +149,24 @@ Start Content
     </div>
 </section><!-- End Testimonials Section -->
 
-<!-- ======= Events Section ======= -->
-<section id="events" class="events">
+<!-- ======= Services Section ======= -->
+<section id="services" class="services">
     <div class="container-fluid" data-aos="fade-up">
 
     <div class="section-header">
-        <h2>Events</h2>
+        <h2>Services</h2>
         <p>Share <span>Your Moments</span> With Our Chefs</p>
     </div>
 
     <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper-wrapper">
-            {% for e in events %}
-            {% if e.is_active %}
-            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url({{e.image.url}})">
-                <h3>{{ e.name }}</h3>
-                <div class="price align-self-start">R{{ e.price }}</div>
-                <p class="description"> {{ e.description }} </p>
-            </div><!-- End Event item -->
+            {% for s in services %}
+            {% if s.is_active %}
+            <div class="swiper-slide service-item d-flex flex-column justify-content-end" style="background-image: url({{s.image.url}})">
+                <h3>{{ s.name }}</h3>
+                {% if s.price != None %}<div class="price align-self-start">{{ s.price }}</div>{% endif %}}
+                <p class="description"> {{ s.description }} </p>
+            </div><!-- End Service item -->
             {% endif %}
             {% endfor %}
         </div>
@@ -172,42 +174,75 @@ Start Content
     </div>
 
     </div>
-</section><!-- End Events Section -->
+</section><!-- End Services Section -->
 
 <!-- ======= Chefs Section ======= -->
 <section id="chefs" class="chefs section-bg">
     <div class="container" data-aos="fade-up">
 
-    <div class="section-header">
-        <h2>Chefs</h2>
-        <p>Meet Our <span>Profesional</span> Chefs</p>
-    </div>
+        <div class="section-header">
+            <h2>Chefs</h2>
+            <p>Meet Our <span>Profesional</span> Chefs</p>
+        </div>
 
-    <div class="row gy-4">
-        {% for c in chefs %}
-        {% if c.is_active %}
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="chef-member">
-                <div class="member-img">
-                <img src="{{ c.image.url }}" class="img-fluid" alt="">
-                <div class="social">
-                    {% if c.twitterURL != None %}<a href="{{ c.twitterURL }}"><i class="bi bi-twitter"></i></a>{% endif %}
-                    {% if c.facebookURL != None %}<a href="{{ c.facebookURL }}"><i class="bi bi-facebook"></i></a>{% endif %}
-                    {% if c.instagramURL != None %}<a href="{{ c.instagramURL }}"><i class="bi bi-instagram"></i></a>{% endif %}
-                    {% if c.linkedinURL != None %}<a href="{{ c.linkedinURL }}"><i class="bi bi-linkedin"></i></a>{% endif %}
+        <!-- ======= Desktop row feature if not on mobile ======= -->
+        <div id="row-chefs">
+            <div class="row gy-4">
+                {% for c in chefs %}
+                {% if c.is_active %}
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="chef-member">
+                        <div class="member-img">
+                            <img src="{{ c.image.url }}" class="img-fluid" alt="">
+                            <div class="social">
+                                {% if c.twitterURL != None %}<a href="{{ c.twitterURL }}"><i class="bi bi-twitter"></i></a>{% endif %}
+                                {% if c.facebookURL != None %}<a href="{{ c.facebookURL }}"><i class="bi bi-facebook"></i></a>{% endif %}
+                                {% if c.instagramURL != None %}<a href="{{ c.instagramURL }}"><i class="bi bi-instagram"></i></a>{% endif %}
+                                {% if c.linkedinURL != None %}<a href="{{ c.linkedinURL }}"><i class="bi bi-linkedin"></i></a>{% endif %}
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>{{ c.name }}</h4>
+                            <span>{{ c.role }}</span>
+                            <p>{{ c.bio }}</p>
+                        </div>
+                    </div>
+                </div><!-- End Chefs Member -->
+                {% endif %}
+                {% endfor %}
+            </div>  
+        </div>      
+
+        <!-- ======= Mobile slide feature if on mobile ======= -->
+        <div id="slide-chefs">
+            <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+                    {% for c in chefs %}
+                    {% if c.is_active %}
+                    <div class="swiper-slide service-item d-flex flex-column justify-content-end">
+                        <div class="chef-member">
+                            <div class="member-img">
+                                <img src="{{ c.image.url }}" class="img-fluid" alt="">
+                                <div class="social">
+                                    {% if c.twitterURL != None %}<a href="{{ c.twitterURL }}"><i class="bi bi-twitter"></i></a>{% endif %}
+                                    {% if c.facebookURL != None %}<a href="{{ c.facebookURL }}"><i class="bi bi-facebook"></i></a>{% endif %}
+                                    {% if c.instagramURL != None %}<a href="{{ c.instagramURL }}"><i class="bi bi-instagram"></i></a>{% endif %}
+                                    {% if c.linkedinURL != None %}<a href="{{ c.linkedinURL }}"><i class="bi bi-linkedin"></i></a>{% endif %}
+                                </div>
+                            </div>
+                            <div class="member-info">
+                                <h4>{{ c.name }}</h4>
+                                <span>{{ c.role }}</span>
+                                <p>{{ c.bio }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
                 </div>
-                </div>
-                <div class="member-info">
-                <h4>{{ c.name }}</h4>
-                <span>{{ c.role }}</span>
-                <p>{{ c.bio }}</p>
-                </div>
+                <div class="swiper-pagination"></div>
             </div>
-        </div><!-- End Chefs Member -->
-        {% endif %}
-        {% endfor %}
-    </div>
-
+        </div> <!-- End of mobile slide feature if on mobile -->
     </div>
 </section><!-- End Chefs Section -->
 
@@ -403,6 +438,7 @@ Start Footer
                     {% for abu in about_us %}
                     {% if abu.mytwitterURL != None %}<a href="{{abu.mytwitterURL}}" class="twitter"><i class="bi bi-twitter"></i></a>{% endif %}
                     {% if abu.myfacebookURL != None %}<a href="{{abu.myfacebookURL}}" class="facebook"><i class="bi bi-facebook"></i></a>{% endif %}
+                    {% if abu.mywhatsappURL != None %}<a href="{{abu.mywhatsappURL}}" class="whatsapp"><i class="bi bi-whatsapp"></i></a>{% endif %}
                     {% if abu.myinstagramURL != None %}<a href="{{abu.myinstagramURL}}" class="instagram"><i class="bi bi-instagram"></i></a>{% endif %}
                     {% if abu.mylinkedinURL != None %}<a href="{{abu.mylinkedinURL}}" class="linkedin"><i class="bi bi-linkedin"></i></a>{% endif %}
                     {% endfor %}

@@ -1,0 +1,24 @@
+        <div class="row gy-4">
+            {% for c in chefs %}
+            {% if c.is_active %}
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                <div class="chef-member">
+                    <div class="member-img">
+                        <img src="{{ c.image.url }}" class="img-fluid" alt="">
+                        <div class="social">
+                            {% if c.twitterURL != None %}<a href="{{ c.twitterURL }}"><i class="bi bi-twitter"></i></a>{% endif %}
+                            {% if c.facebookURL != None %}<a href="{{ c.facebookURL }}"><i class="bi bi-facebook"></i></a>{% endif %}
+                            {% if c.instagramURL != None %}<a href="{{ c.instagramURL }}"><i class="bi bi-instagram"></i></a>{% endif %}
+                            {% if c.linkedinURL != None %}<a href="{{ c.linkedinURL }}"><i class="bi bi-linkedin"></i></a>{% endif %}
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h4>{{ c.name }}</h4>
+                        <span>{{ c.role }}</span>
+                        <p>{{ c.bio }}</p>
+                    </div>
+                </div>
+            </div><!-- End Chefs Member -->
+            {% endif %}
+            {% endfor %}
+        </div>

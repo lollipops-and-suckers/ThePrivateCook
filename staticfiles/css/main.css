@@ -514,6 +514,8 @@ section {
 --------------------------------------------------------------*/
 .about .about-img {
   min-height: 500px;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .about h3 {
@@ -732,13 +734,13 @@ section {
 }
 
 /*--------------------------------------------------------------
-# Events Section
+# services Section
 --------------------------------------------------------------*/
-.events .container-fluid {
+.services .container-fluid {
   padding: 0;
 }
 
-.events .event-item {
+.services .service-item {
   background-size: cover;
   background-position: cente;
   min-height: 600px;
@@ -746,19 +748,19 @@ section {
 }
 
 @media (max-width: 575px) {
-  .events .event-item {
+  .services .service-item {
     min-height: 500px;
   }
 }
 
-.events .event-item:before {
+.services .service-item:before {
   content: "";
   background: rgba(0, 0, 0, 0.6);
   position: absolute;
   inset: 0;
 }
 
-.events .event-item h3 {
+.services .service-item h3 {
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 5px;
@@ -766,7 +768,7 @@ section {
   position: relative;
 }
 
-.events .event-item .price {
+.services .service-item .price {
   color: #fff;
   border-bottom: 2px solid var(--color-primary);
   font-size: 32px;
@@ -775,33 +777,33 @@ section {
   position: relative;
 }
 
-.events .event-item .description {
+.services .service-item .description {
   margin-bottom: 0;
   color: rgba(255, 255, 255, 0.9);
   position: relative;
 }
 
 @media (min-width: 1200px) {
-  .events .swiper-slide-active+.swiper-slide {
+  .services .swiper-slide-active+.swiper-slide {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
     border-right: 1px solid rgba(255, 255, 255, 0.5);
     z-index: 1;
   }
 }
 
-.events .swiper-pagination {
+.services .swiper-pagination {
   margin-top: 20px;
   position: relative;
 }
 
-.events .swiper-pagination .swiper-pagination-bullet {
+.services .swiper-pagination .swiper-pagination-bullet {
   width: 10px;
   height: 10px;
   background-color: #d1d1d7;
   opacity: 1;
 }
 
-.events .swiper-pagination .swiper-pagination-bullet-active {
+.services .swiper-pagination .swiper-pagination-bullet-active {
   background-color: var(--color-primary);
 }
 

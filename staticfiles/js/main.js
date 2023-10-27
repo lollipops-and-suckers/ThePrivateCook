@@ -233,3 +233,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+// Runs once on page load - not to be tested on responsive design mode
+const isMobile = function() {
+  const match = window.matchMedia('(pointer:coarse)');
+  return (match && match.matches);
+}
+
+var divMobile = document.getElementById('slide-chefs');
+var displayMobile = 0;
+
+var divDesktop = document.getElementById('row-chefs');
+var displayDesktop = 0;
+
+if (`${isMobile() ? 'Mobile' : 'Not mobile'}` == 'Mobile') {
+  divDesktop.style.display = 'none';
+  displayDesktop = 1;
+
+  divMobile.style.display = 'block';
+  displayMobile = 0;
+
+} else {
+  divMobile.style.display = 'none';
+  displayMobile = 1;
+
+  divDesktop.style.display = 'block';
+  displayDesktop = 0;
+}

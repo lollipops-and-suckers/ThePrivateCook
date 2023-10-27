@@ -1,19 +1,18 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>{% block title %}{%endblock %}</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+    {% for head in header %}
+    <title>{{head.title}}</title>
+    <meta content={{head.description}} name="description">
+    <meta content={{head.keywords}} name="keywords">
 
     <!-- Favicons -->
-    <link href="{% static 'images/favicon.png' %}" rel="icon">
-    <link href="{% static 'images/apple-touch-icon.png' %}" rel="apple-touch-icon">
-
+    <link href={{head.favicon.url}} rel="icon">
+    <link href={{head.favicon_apple.url}} rel="apple-touch-icon">
+    {% endfor %}
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,16 +34,17 @@
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
       <div class="container d-flex align-items-center justify-content-between">
-
+        {% for h in home %}
         <a href="#" class="logo d-flex align-items-center me-auto me-lg-0">
-          <img src="{{me.userprofile.logo.url}}" alt="">
+          <img src="{{h.logo.url}}" alt="">
         </a>
+        {% endfor %}
 
         <nav id="navbar" class="navbar">
           <ul>
             <li><a href="#hero">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#events">Events</a></li>
+            <li><a href="#services">Services</a></li>
             <li><a href="#chefs">Chefs</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact</a></li>
